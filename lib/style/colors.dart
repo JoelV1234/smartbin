@@ -11,4 +11,5 @@ const successColor = Color.fromARGB(255, 0, 147, 86);
 const errorColor = Color.fromARGB(255, 255, 27, 65);
 const mainTextColor = Colors.black;
 const warnningRed =Color.fromARGB(255, 255, 47, 47);
+const azureBlue = Color(0xFF2972FF);
 

@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smartbin/account/account.dart';
-import 'package:smartbin/auth/auth_credentials.dart';
+import 'package:smartbin/account/account_service.dart';
+import 'package:smartbin/api/api_provider.dart';
+import 'package:smartbin/auth/models/auth_credentials.dart';
 import 'package:smartbin/auth/auth_provider.dart';
 
 final accountProvider = StateNotifierProvider<AccountProvider, Account?>(
@@ -9,23 +11,35 @@ final accountProvider = StateNotifierProvider<AccountProvider, Account?>(
 class AccountProvider extends StateNotifier<Account?> {
   
   final Ref ref;
-  AuthProvider get auth => ref.read(authProvider);
-  AccountProvider(this.ref) : super(null);
+  AuthProvider get auth => ref.read(authProvider.notifier);
+  AccountService accountService;
+  AccountProvider(this.ref) : 
+    accountService = AccountService(ref.read(serverApiProvider)), super(null);
 
 
 
-  Future<void> login() async {
+  Future<Account?> login() async {
     AuthCredentials account = await auth.login();
-    state = Account(
-      token: account.accessToken,
-      email: 'email',
-      name: 'name',
-      credentials: account
-    ); 
+    if(account.firstTimeLogin) {
+      return null;
+    } else {
+      try {
+        state = await accountService.getUserInfo();
+        return state;
+      } catch (e) {
+   //     logout();
+        rethrow;
+      }
+    }
   }
 
+  Future<void> createDbUser(Account account) async {
+    await accountService.createUserInDb(account);
+    state = account;
+  } 
+
   Future<void> logout() async {
-    auth.logout();
     state = null;
+    auth.logout();
   }
 }

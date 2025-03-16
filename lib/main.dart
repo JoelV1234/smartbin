@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:smartbin/app_gate.dart';
+import 'package:smartbin/app_gate/app_gate.dart';
 import 'package:smartbin/style/main_theme.dart';
 
 void main() async{

@@ -20,6 +20,14 @@ class _GoogleSignInButtonState extends ConsumerState<GoogleSignInButton> {
     setState(() => isLoading = true );
     ref.read(accountProvider.notifier).login().then((value) {
       setState(() => isLoading = false );
+    }).onError((error, stackTrace) {
+      setState(() => isLoading = false );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error.toString()),
+          backgroundColor: warnningRed,
+        ),
+      );
     });
   }
 
