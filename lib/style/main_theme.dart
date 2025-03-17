@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:smartbin/style/colors.dart';
 
 ThemeData mainTheme(BuildContext context) =>
@@ -7,6 +8,9 @@ ThemeData mainTheme(BuildContext context) =>
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.transparent,
     ),
+    textTheme: GoogleFonts.mulishTextTheme(
+      Theme.of(context).textTheme
+    ).apply(bodyColor: Colors.black),
     inputDecorationTheme: InputDecorationTheme(
       errorBorder: OutlineInputBorder(),
       focusedErrorBorder: OutlineInputBorder(

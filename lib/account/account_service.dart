@@ -17,6 +17,8 @@ class AccountService {
 
   Future<Account> getUserInfo() async {
     final response = await serverApi.httpGet(endpoint : Endpoints.getUsers);
+    print("======================");
+    print(response.data);
     return Account.fromJson(jsonDecode(response.data));
   }
 

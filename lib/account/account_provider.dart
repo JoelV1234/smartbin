@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smartbin/account/account.dart';
 import 'package:smartbin/account/account_service.dart';
 import 'package:smartbin/api/api_provider.dart';
-import 'package:smartbin/auth/models/auth_credentials.dart';
 import 'package:smartbin/auth/auth_provider.dart';
 
 final accountProvider = StateNotifierProvider<AccountProvider, Account?>(
@@ -18,19 +17,10 @@ class AccountProvider extends StateNotifier<Account?> {
 
 
 
-  Future<Account?> login() async {
-    AuthCredentials account = await auth.login();
-    if(account.firstTimeLogin) {
-      return null;
-    } else {
-      try {
-        state = await accountService.getUserInfo();
-        return state;
-      } catch (e) {
-   //     logout();
-        rethrow;
-      }
-    }
+  Future<void> login() => auth.login();
+
+  Future<void> getUserInfo() async {
+    state = await accountService.getUserInfo();
   }
 
   Future<void> createDbUser(Account account) async {

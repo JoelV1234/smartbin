@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smartbin/account/account_provider.dart';
-import 'package:smartbin/app_gate/app_gate_enum.dart';
-import 'package:smartbin/app_gate/app_gate_provider.dart';
+
+
 
 final getAccount = FutureProvider((ref) async {
-  return ref.watch(accountProvider.notifier).login();
+  return ref.watch(accountProvider.notifier).getUserInfo();
 });
 
 
@@ -18,7 +18,6 @@ class InitLoadingPage extends ConsumerWidget {
     return Scaffold(
       body: account.when(
         data: (account) {
-          ref.read(appGateProvider.notifier).updateAppGate(AppGateEnum.home);
          return const SizedBox();
         },
         loading: () => const CircularProgressIndicator(),
